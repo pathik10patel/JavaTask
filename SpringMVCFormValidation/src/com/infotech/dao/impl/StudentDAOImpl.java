@@ -45,13 +45,17 @@ public class StudentDAOImpl implements StudentDAO {
 	      Transaction tx = null;
 	      
 	      try {
-	         tx = session.beginTransaction();
-	         List employees = session.createQuery("FROM book1").list(); 
-	         for (Iterator iterator = employees.iterator(); iterator.hasNext();){
-	            Student employee = (Student) iterator.next(); 
-	            System.out.print("First Name: " + employee.getBookName()); 
-	            System.out.print("  Last Name: " + employee.getBookId()); 
-	            System.out.println("  Salary: " + employee.getAuthor()); 
+	              tx = session.beginTransaction();
+	         String hql = "SELECT b.bookname FROM books1 b";
+	         Query query = session.createQuery(hql);
+	         List results = query.list();
+	         
+	        // List employees = cr.list();
+
+	         for (Iterator iterator = query.iterate(); iterator.hasNext();){
+	            Student book = (Student) iterator.next(); 
+	            System.out.print("Book Name: " + book.getBookName()); 
+
 	         }
 	         tx.commit();
 	      } catch (HibernateException e) {
